@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Excel Formula with Javascript</title>
+    <style type="text/css">
+       
+        
+    </style>
+</head><br><br><br><br>
+        <h1 style="color: #bac964;">Assignment 2.2</h1><br><br>
+        <h1 style="color: #bac964;">Excel Sheet</h1>
+<body style="text-align: center; background-color: #004a2f;"><br><br><br><br>   
+    <input type="text" placeholder="A1" name="" id="a1" style="border: 2px solid #ff6337;">&nbsp;&nbsp;
+    <input type="text" placeholder="B1" name="" id="b1" style="border: 2px solid #ff6337;">&nbsp;&nbsp;
+    <input type="text" placeholder="C1" name="" id="c1" style="border: 2px solid #ff6337;"><br><br><br><br>
+    <input type="text" placeholder="A2" name="" id="a2" style="border: 2px solid #ff6337;">&nbsp;&nbsp;
+    <input type="text" placeholder="B2" name="" id="b2" style="border: 2px solid #ff6337;">&nbsp;&nbsp;
+    <input type="text" placeholder="C2" name="" id="c2" style="border: 2px solid #ff6337;"><br><br><br><br>
+    <input type="text" placeholder="A3" name="" id="a3" style="border: 2px solid #ff6337;">&nbsp;&nbsp;
+    <input type="text" placeholder="B3" name="" id="b3" style="border: 2px solid #ff6337;">&nbsp;&nbsp;
+    <input type="text" placeholder="C3" name="" id="c3" style="border: 2px solid #ff6337;"><br><br><br>
+    
+    <input type="text" name="userinput" placeholder="Formula"  id="userinput">&nbsp;
+    <input type="button" name="" value="OK" onclick="operation();" style="background-color: #01d28e"><br><br>
+    <span style="color: #f7fbe1;font-size: 2em;">Result is :<span> <span id="result" style="font-size: 1em;color: #f7fbe1;"></span><br><br>
+    <script type="text/javascript">
+
+
+    function operation(value){
+        var string=document.getElementById('userinput').value;
+        var strSplit=string.split('');
+        // alert(strSplit.length);
+        if(strSplit[0]=="("){
+            operationTwo();
+        }else if(strSplit.length===5){
+            operationThree();
+        }else {
+            operationOne();
+        }
+
+
+    }
+    function operationTwo(value){
+
+        var one=document.getElementById('a1').value;
+        var two=document.getElementById('b1').value;
+        var three=document.getElementById('c1').value;
+        var four=document.getElementById('a2').value;
+         var five=document.getElementById('b2').value;
+        var six=document.getElementById('c2').value;
+        var seven=document.getElementById('a3').value;
+        var eight=document.getElementById('b3').value;
+        var nine=document.getElementById('c3').value;
+        var num=[one,two,three,four,five,six,seven,eight,nine];
+
+        var stringValue=" "; //A1,+,B1
+        var secString=" ";
+        var str=document.getElementById('userinput').value;
+        var firstSplit=str.split(/(\()/);
+        var secondSplit=firstSplit[2];
+        var thridSplit=secondSplit.split(/(\))/);
+        var fourthSplit=thridSplit[0];
+        var fifthSplit=thridSplit[2];
+        var sixSplit=fifthSplit.split('');
+
+        for(var i=0;i<sixSplit.length;i++){
+            if(sixSplit[i]=="+"){
+                stringValue=fifthSplit.split(/(\+)/);
+            } else if(sixSplit[i]=="-"){
+                stringValue=fifthSplit.split(/(\-)/);
+            }else if(sixSplit[i]=="*"){
+                stringValue=fifthSplit.split(/(\*)/);
+            }else if(sixSplit[i]=="/"){
+                stringValue=fifthSplit.split(/(\/)/);
+            }
+        }
+        // alert(stringValue);
+        var firstString=fourthSplit.split('');
+        for(var i=0;i<firstString.length;i++){
+            if(firstString[i]=="+"){
+                secString=fourthSplit.split(/(\+)/);
+            }else if(firstString[i]=="-"){
+                secString=fourthSplit.split(/(\-)/);
+            }else if(firstString[i]=="*"){
+                secString=fourthSplit.split(/(\*)/);
+            }else if(firstString[i]=="/"){
+                secString=fourthSplit.split(/(\/)/);
+            }
+        }
+              // alert(secString);
+        var alpha=["A1","B1","C1","A2","B2","C2","A3","B3","C3"];
+        var operatorTwo=" ";
+        var operator=["+","-","*","/"];
+        var operatorOne=" ";
+        var valOne=["","","",""];
+        var valTwo=["","","",""];
+
+
+        for(var i=0;i<stringValue.length;i++){
+            for(var j=0;j<alpha.length;j++){
+                if(stringValue[i]==operator[j]){
+                    operatorOne=stringValue[i];
+                }else if(stringValue[i]==alpha[j]){
+                    valOne[i]=num[j];
+                }
+            }
+        }
+
+            for(var i=0;i<secString.length;i++){
+                for(var j=0;j<alpha.length;j++){
+                    if(secString[i]==alpha[j]){
+                        valTwo[i]=num[j];
+                    }else if(secString[i]==operator[j]){
+                        operatorTwo=secString[i];
+                    }
+                }
+            }
+        var numOne=parseInt(valTwo[0]);
+        var numTwo=parseInt(valTwo[2]);
+        var numThree = parseInt(valOne[2]);
+        var preResult = 0;
+
+        if(valTwo){
+           switch(operatorTwo){
+               case "+":
+                   preResult=numOne+numTwo;break;
+               case "-":
+                   preResult=numOne-numTwo;break;
+               case "*":
+                   preResult=numOne*numTwo;break;
+               case "/":
+                   preResult=numOne/numTwo;break;
+           }
+        }
+        if(valOne){
+           switch(operatorOne){
+               case "+":
+                   preResult = preResult + numThree;
+                   document.getElementById('result').innerText = preResult;
+                   break;
+               case "-":
+                   preResult = preResult - numThree;
+                   document.getElementById('result').innerText = preResult;
+                   break;
+
+               case "*":
+                   preResult = preResult * numThree;       
+                   document.getElementById('result').innerText = preResult;
+                   break;
+               case "/":
+                   preResult = preResult / numThree;
+                   document.getElementById('result').innerText = preResult;
+                   break;
+           }
+        }
+            
+        }
+    function operationOne(value){
+
+        var one=document.getElementById('a1').value;
+        var two=document.getElementById('b1').value;
+        var three=document.getElementById('c1').value;
+        var four=document.getElementById('a2').value;
+        var five=document.getElementById('b2').value;
+        var six=document.getElementById('c2').value;
+        var seven=document.getElementById('a3').value;
+        var eight=document.getElementById('b3').value;
+        var nine=document.getElementById('c3').value;
+        var num=[one,two,three,four,five,six,seven,eight,nine];
+
+        var stringValue=" "; //B1,+,C1
+        var secString=" ";//A1,*
+        var str=document.getElementById('userinput').value;//A1*(B1+C1);
+        var firstSplit=str.split(/(\()/);// A1*, (, B1+C1);
+        var secondSplit=firstSplit[2];//B1+C1)
+        var thridSplit=secondSplit.split(/(\))/);//B1+C1, ),
+        var fourthSplit=firstSplit[0];//A1*
+        var fifthSplit=thridSplit[0];//B1+C1
+        var sixSplit=fifthSplit.split('');//B,1,+,C,1
+
+
+        for(var i=0;i<sixSplit.length;i++){
+            if(sixSplit[i]=="+"){
+                stringValue=fifthSplit.split(/(\+)/);
+            } else if(sixSplit[i]=="-"){
+                stringValue=fifthSplit.split(/(\-)/);
+            }else if(sixSplit[i]=="*"){
+                stringValue=fifthSplit.split(/(\*)/);
+            }else if(sixSplit[i]=="/"){
+                stringValue=fifthSplit.split(/(\/)/);
+            }
+        }
+        // alert(stringValue);
+        var firstString=fourthSplit.split('');//A,1,*
+        for(var i=0;i<firstString.length;i++){
+            if(firstString[i]=="+"){
+                secString=fourthSplit.split(/(\+)/);
+            }else if(firstString[i]=="-"){
+                secString=fourthSplit.split(/(\-)/);
+            }else if(firstString[i]=="*"){
+                secString=fourthSplit.split(/(\*)/);
+            }else if(firstString[i]=="/"){
+                secString=fourthSplit.split(/(\/)/);
+            }
+        }
+            //   alert(secString);
+        var alpha=["A1","B1","C1","A2","B2","C2","A3","B3","C3"];
+        var operatorTwo=" ";
+        var operator=["+","-","*","/"];
+        var operatorOne=" ";
+        var valOne=["","","",""];//b1,,C1
+        var valTwo=["","","",""];
+
+
+        for(var i=0;i<stringValue.length;i++){
+            for(var j=0;j<alpha.length;j++){
+                if(stringValue[i]==alpha[j]){
+                    valOne[i]=num[j];
+                }else if(stringValue[i]==operator[j]){
+                    operatorOne=stringValue[i];
+                }
+            }
+        }
+        // alert(operatorOne);
+        // alert(valOne);
+
+        for(var i=0;i<secString.length;i++){
+            for(var j=0;j<alpha.length;j++){
+                if(secString[i]==alpha[j]){
+                    valTwo[i]=num[j];
+                }else if(secString[i]==operator[j]){
+                    operatorTwo=secString[i];
+                }
+            }
+        }
+
+        // alert(operatorTwo);
+        // alert(valTwo);
+       var numOne=parseInt(valOne[0]);
+       var numTwo=parseInt(valOne[2]);
+       var numThree = parseInt(valTwo[0]);
+       var preResult = 0;
+
+       if(valOne){
+           switch(operatorOne){
+               case "+":
+                   preResult=numOne+numTwo;break;
+               case "-": 
+                   preResult=numOne-numTwo;break;
+               case "*":
+                   preResult=numOne*numTwo;break;
+               case "/":
+                   preResult=numOne/numTwo;break;
+           }
+       }
+       if(valTwo){
+           switch(operatorTwo){
+               case "+":
+                   preResult = preResult + numThree;
+                   document.getElementById('result').innerText = preResult;
+                   break;
+               case "-":
+                   preResult = preResult - numThree;
+                   document.getElementById('result').innerText = preResult;
+                   break;
+
+               case "*":
+                   preResult = preResult * numThree;       
+                   document.getElementById('result').innerText = preResult;
+                    break;
+               case "/":
+                   preResult = preResult / numThree;
+                   document.getElementById('result').innerText = preResult;
+                   break;
+           }
+       }
+            
+    }
+    function operationThree(value){
+        var one=document.getElementById('a1').value;
+        var two=document.getElementById('b1').value;
+        var three=document.getElementById('c1').value;
+        var four=document.getElementById('a2').value;
+        var five=document.getElementById('b2').value;
+        var six=document.getElementById('c2').value;
+        var seven=document.getElementById('a3').value;
+        var eight=document.getElementById('b3').value;
+        var nine=document.getElementById('c3').value;
+
+        var num=[one,two,three,four,five,six,seven,eight,nine];
+        
+        var stringOne=" ";//A1,+,B1
+        
+
+        var str=document.getElementById('userinput').value;//A1+B1
+        var strSplit=str.split('');
+        for(var i=0;i<strSplit.length;i++){
+            if(strSplit[i]=="+"){
+                stringOne=str.split(/(\+)/);
+            }else if(strSplit[i]=="-"){
+                stringOne=str.split(/(\-)/);
+            }else if(strSplit[i]=="*"){
+                stringOne=str.split(/(\*)/);
+            }else if(strSplit[i]=="/"){
+                stringOne=str.split(/(\/)/);
+            }
+        }
+        // alert(stringOne);
+        var alpha=["A1","B1","C1","A2","B2","C2","A3","B3","C3"];
+        var stringTwo=["","","",""];
+        var operator=["+","-","*","/"];
+        var opr=" ";
+        for(var i=0;i<stringOne.length;i++){
+            for(var j=0;j<alpha.length;j++){
+                if(stringOne[i]==alpha[j]){
+                    stringTwo[i]=num[j];
+                }else if(stringOne[i]==operator[j]){
+                    opr=stringOne[i];
+                }
+            }
+        }
+        // alert(stringTwo);
+        // alert(opr);
+        var num1=parseInt(stringTwo[0]);
+        var num2=parseInt(stringTwo[2]);
+
+        if(stringTwo){
+            switch(opr){
+                case "+":document.getElementById('result').innerText=num1+num2;break;
+                case "-":document.getElementById('result').innerText=num1-num2;break;
+                case "*":document.getElementById('result').innerText=num1*num2;break;
+                case "/":document.getElementById('result').innerText=num1/num2;break;
+
+            }
+        }
+
+    } 
+</script>
+</body>
+</html>
